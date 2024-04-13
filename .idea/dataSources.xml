@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="firstweb@localhost" uuid="da9395f9-0e26-41c3-9d77-e41e7db6bd0d">
+    <data-source source="LOCAL" name="mini_board@localhost" uuid="b024d738-edf8-45dd-9019-2616c33274f5">
       <driver-ref>mysql.8</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
-      <jdbc-url>jdbc:mysql://localhost:3306/firstweb</jdbc-url>
+      <jdbc-url>jdbc:mysql://localhost:3306/mini_board</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
   </component>

@@ -6,6 +6,7 @@
     <typeAliases>
 <!--        <typeAlias alias="BoardDto" type="com.fastcampus.ch4.domain.BoardDto"/>-->
         <typeAlias alias="UserDao" type="com.myportfolio.web.repository.UserDao"/>
+        <typeAlias alias="User" type="com.myportfolio.web.domain.User"/>
 
     </typeAliases>
 </configuration>
