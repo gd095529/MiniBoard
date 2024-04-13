@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.myportfolio.web.repository.PostsMapper">
+
+    <select id="selectAll" resultType="Posts">
+        select * from posts
+        order by created_date desc, id desc
+    </select>
+
+    <select id="count" resultType="int">
+        select count(*) from posts
+    </select>
+
+    <insert id="insert" parameterType="Posts">
+        insert into posts
+        (id, title, content, view, created_date. updated_date, user_id)
+        values
+            (#{id},#{title},#{content},#{view},#{created_date},#{user_id})
+    </insert>
+
+    <select id="select" parameterType="int" resultType="Posts">
+        select *
+        from posts
+        where id = #{id}
+    </select>
+
+    <select id="selectPage" parameterType="map" resultType="Posts">
+        select * from posts
+        order by created_date desc, id desc
+        limit #{offset}, #{pageSize}
+    </select>
+
+    <delete id="deleteAll">
+        delete from posts
+    </delete>
+
+    <delete id="delete" parameterType="map">
+        delete from posts
+        where
+    </delete>
+</mapper>
