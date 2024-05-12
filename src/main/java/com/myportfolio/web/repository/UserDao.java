@@ -10,15 +10,15 @@ import java.util.List;
 
 @Repository
 public class UserDao {
-    @Autowired
-    DataSource ds;
+//    @Autowired
+//    DataSource ds;
 
     @Autowired
     SqlSession session;
 
     String namespace = "com.myportfolio.web.repository.UserMapper.";
-    public User select(String username) throws Exception {
-        return session.selectOne(namespace+"selectOne", username);
+    public User select(Integer id) throws Exception {
+        return session.selectOne(namespace+"selectOne", id);
     }
     public int insert(User user) throws Exception{
         return session.insert(namespace+"insert", user);
@@ -30,6 +30,10 @@ public class UserDao {
 
     public int delete(Integer id) throws Exception{
         return session.delete(namespace+"delete", id);
+    }
+
+    public int update(User user) throws Exception{
+        return session.update(namespace+"update",user);
     }
 
     public int countUser() throws Exception{
