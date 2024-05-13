@@ -9,7 +9,7 @@
         order by pcid desc corder asc
     </select>
 
-    <select id="selectOne" resultType="Comments" parameterType="Integer">
+    <select id="select" resultType="Comments" parameterType="Integer">
         select * from comments
         where id = #{id}
     </select>

@@ -43,7 +43,7 @@ public class PostsDao {
 
     public List<Posts> selectPage(Map map) throws Exception{
         return session.selectList(namespace+"selectPage",map);
-    }// ??
+    }
 
     public int update(Posts dto) throws Exception{
         return session.update(namespace+"update",dto);
