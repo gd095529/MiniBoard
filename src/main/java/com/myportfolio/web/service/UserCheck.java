@@ -17,15 +17,15 @@ public class UserCheck implements Validator {
         String email = user.getEmail();
         String password = user.getPassword();
 
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors,"id","required");
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors,"pwd","required");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors,"email","required");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors,"password","required");
 
-        if(email==null || email.length() <  4 || email.length() > 12) {
-            errors.rejectValue("id", "invalidLength", new String[]{"4","12"}, null);
+        if(email==null || email.contains("@")) {
+            errors.rejectValue("email", "invalidLength", new String[]{"4","12"}, null);
         }
 
         if(password==null || password.length() <  4 || password.length() > 12) {
-            errors.rejectValue("pwd", "invalidLength", new String[]{"4","12"}, null);
+            errors.rejectValue("password", "invalidLength", new String[]{"4","12"}, null);
         }
     }
 }
