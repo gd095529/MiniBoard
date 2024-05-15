@@ -3,9 +3,9 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.myportfolio.web.repository.UserMapper">
-    <select id="selectOne" resultType="User" parameterType="String">
+    <select id="selectOne" resultType="User" parameterType="Integer">
         select * from user
-        where username = #{username}
+        where id = #{id}
     </select>
 
     <select id="selectAll" resultType="User">
@@ -26,7 +26,17 @@
         delete from user
     </delete>
 
+    <update id="update" parameterType="User">
+        update user set password = #{password}, username = #{username}, nickname = #{nickname}, updated_date = now()
+        where id = #{id}
+    </update>
+
     <select id="count" resultType="int">
         select count(*) from user
+    </select>
+
+    <select id="selectEmail" resultType="User" parameterType="String">
+        select * from user
+        where email = #{email}
     </select>
 </mapper>

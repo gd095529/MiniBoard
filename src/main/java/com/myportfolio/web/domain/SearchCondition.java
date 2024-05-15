@@ -1,5 +1,7 @@
 package com.myportfolio.web.domain;
 
+import org.springframework.web.util.UriComponentsBuilder;
+
 public class SearchCondition {
     private Integer page =1;
     private Integer pageSize = 10;
@@ -16,6 +18,21 @@ public class SearchCondition {
                 ", keyword='" + keyword + '\'' +
                 ", option='" + option + '\'' +
                 '}';
+    }
+
+    public String getQueryString(){
+        return getQueryString(page);
+    }
+
+    public String getQueryString(Integer page){
+        // ?page=1&pageSize=10&option="T"&keyword="title"
+
+        return UriComponentsBuilder.newInstance()
+                .queryParam("page",page)
+                .queryParam("pageSize",pageSize)
+                .queryParam("option",option)
+                .queryParam("keyword",keyword)
+                .build().toString();
     }
 
     public Integer getPage() {

@@ -51,6 +51,11 @@
         where id = #{id}
     </update>
 
+    <update id="updateCommentCnt" parameterType="map">
+        update posts set comment_cnt = comment_cnt + #{cnt}
+        where id = #{id}
+    </update>
+
     <sql id="searchCondition">
         <choose>
             <when test='option=="T"'>
@@ -66,8 +71,13 @@
         </choose>
     </sql>
 
+    <sql id="selectFromPosts">
+        SELECT *
+        FROM posts
+    </sql>
+
     <select id="searchSelectPage" parameterType="SearchCondition" resultType="Posts">
-        <include refid="selectFromBoard"/>
+        <include refid="selectFromPosts"/>
         where true
         <include refid="searchCondition"></include>
         ORDER BY ppid DESC, id ASC
@@ -75,7 +85,7 @@
     </select>
 
     <select id="searchResultCnt" parameterType="SearchCondition" resultType="int">
-        Select Count(*) from board
+        Select Count(*) from posts
         where true
         <include refid="searchCondition"></include>
     </select>

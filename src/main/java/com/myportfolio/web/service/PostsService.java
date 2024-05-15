@@ -30,9 +30,9 @@ public class PostsService {
         return postsDao.selectAll();
     }
 
-    public Posts read(Integer bno) throws Exception {
-        Posts boardDto = postsDao.select(bno);
-        postsDao.increaseViewCnt(bno);
+    public Posts read(Integer id) throws Exception {
+        Posts boardDto = postsDao.select(id);
+        postsDao.increaseViewCnt(id);
 
         return boardDto;
     }
@@ -52,6 +52,5 @@ public class PostsService {
     public List<Posts> getSearchResultPage(SearchCondition sc) throws Exception {
         return postsDao.searchSelectPage(sc);
     }
-
 
 }

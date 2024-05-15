@@ -60,4 +60,11 @@ public class PostsDao {
     public List<Posts> searchSelectPage(SearchCondition sc) throws Exception{
         return session.selectList(namespace+"searchSelectPage",sc);
     }
+
+    public int updateCommentCnt(Integer id, int cnt) {
+        Map map = new HashMap();
+        map.put("cnt",cnt);
+        map.put("id",id);
+        return session.update(namespace+"updateCommentCnt", map);
+    }
 }

@@ -9,6 +9,7 @@
         <typeAlias alias="User" type="com.myportfolio.web.domain.User"/>
         <typeAlias alias="Comments" type="com.myportfolio.web.domain.Comments"/>
         <typeAlias alias="Posts" type="com.myportfolio.web.domain.Posts"/>
+        <typeAlias alias="SearchCondition" type="com.myportfolio.web.domain.SearchCondition"/>
 
     </typeAliases>
 </configuration>

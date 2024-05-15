@@ -32,8 +32,13 @@
         insert into comments
             (id, comment, created_date, updated_date, post_id, user_id, cdepth, pcid, corder)
         values
-            (${id}, #{comment}, now(), now(), #{post_id}, #{user_id}, #{cdepth}, #{pcid}, #{corder})
+            (null, #{comment}, now(), now(), #{post_id}, #{user_id}, 0, 0, 0)
     </insert>
+
+    <update id="updatePcid" parameterType="int">
+        update comments set pcid = #{id}
+        where id = #{id}
+    </update>
 
     <update id="update" parameterType="Comments">
         update comments
@@ -41,4 +46,11 @@
             ,updated_date = now()
         where id = #{id} and user_id = #{user_id}
     </update>
+
+    <select id="findLastId">
+        select id from comments
+        order by id desc
+        limit 0,1
+    </select>
+
 </mapper>

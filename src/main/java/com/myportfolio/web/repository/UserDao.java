@@ -20,6 +20,10 @@ public class UserDao {
     public User select(Integer id) throws Exception {
         return session.selectOne(namespace+"selectOne", id);
     }
+
+    public User selectEmail(String email) throws Exception{
+        return session.selectOne(namespace+"selectEmail",email);
+    }
     public int insert(User user) throws Exception{
         return session.insert(namespace+"insert", user);
     }

@@ -25,7 +25,7 @@ public class CommentsDao {
         return session.delete(namespace+"deleteAll",post_id);
     }
 
-    public int delete(Integer id, String user_id) throws Exception {
+    public int delete(Integer id, Integer user_id) throws Exception {
         Map map = new HashMap();
         map.put("id", id);
         map.put("user_id", user_id);
@@ -46,5 +46,13 @@ public class CommentsDao {
 
     public int update(Comments dto) throws Exception {
         return session.update(namespace+"update", dto);
+    }
+
+    public int updatePcid(Integer id) throws Exception{
+        return session.update(namespace+"updatePcid", id);
+    }
+
+    public int findLastId() throws Exception{
+        return session.selectOne(namespace+"findLastId");
     }
 }

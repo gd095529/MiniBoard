@@ -34,4 +34,9 @@
     <select id="count" resultType="int">
         select count(*) from user
     </select>
+
+    <select id="selectEmail" resultType="User" parameterType="String">
+        select * from user
+        where email = #{email}
+    </select>
 </mapper>

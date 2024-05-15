@@ -10,6 +10,10 @@ public class UserService {
     @Autowired
     UserDao userDao;
 
+    public User read(String email) throws Exception{
+        return userDao.selectEmail(email);
+    }
+
     public User read(Integer id) throws Exception{
         return userDao.select(id);
     }

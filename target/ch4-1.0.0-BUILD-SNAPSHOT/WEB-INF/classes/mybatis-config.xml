@@ -7,6 +7,9 @@
 <!--        <typeAlias alias="BoardDto" type="com.fastcampus.ch4.domain.BoardDto"/>-->
         <typeAlias alias="UserDao" type="com.myportfolio.web.repository.UserDao"/>
         <typeAlias alias="User" type="com.myportfolio.web.domain.User"/>
+        <typeAlias alias="Comments" type="com.myportfolio.web.domain.Comments"/>
+        <typeAlias alias="Posts" type="com.myportfolio.web.domain.Posts"/>
+        <typeAlias alias="SearchCondition" type="com.myportfolio.web.domain.SearchCondition"/>
 
     </typeAliases>
 </configuration>

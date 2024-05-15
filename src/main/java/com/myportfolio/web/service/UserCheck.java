@@ -20,8 +20,8 @@ public class UserCheck implements Validator {
         ValidationUtils.rejectIfEmptyOrWhitespace(errors,"email","required");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors,"password","required");
 
-        if(email==null || email.contains("@")) {
-            errors.rejectValue("email", "invalidLength", new String[]{"4","12"}, null);
+        if(email==null || !email.contains("@")) {
+            errors.rejectValue("email", "invalidLength", new String[]{"5","100"}, null);
         }
 
         if(password==null || password.length() <  4 || password.length() > 12) {
