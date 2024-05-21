@@ -1,57 +1,52 @@
 package com.myportfolio.web.domain;
 
 import java.time.LocalDateTime;
+import java.util.Date;
 
 public class User {
-    private Integer id;
-    private String username;
-    private String password;
-    private String nickname;
+    private String uid;
+    private String pwd;
+    private String name;
     private String email;
-    private LocalDateTime created_date;
-    private LocalDateTime updated_date;
+    private Date created_date;
+    private Date updated_date;
 
     public User(){};
-    public User(Integer id, String username, String password, String nickname, String email, LocalDateTime created_date, LocalDateTime updated_date) {
-        this.id = id;
-        this.username = username;
-        this.password = password;
-        this.nickname = nickname;
-        this.email = email;
-        this.created_date = created_date;
-        this.updated_date = updated_date;
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "uid='" + uid + '\'' +
+                ", pwd='" + pwd + '\'' +
+                ", name='" + name + '\'' +
+                ", email='" + email + '\'' +
+                ", created_date=" + created_date +
+                ", updated_date=" + updated_date +
+                '}';
     }
 
-    public Integer getId() {
-        return id;
+    public String getUid() {
+        return uid;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setUid(String uid) {
+        this.uid = uid;
     }
 
-    public String getUsername() {
-        return username;
+    public String getPwd() {
+        return pwd;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setPwd(String pwd) {
+        this.pwd = pwd;
     }
 
-    public String getPassword() {
-        return password;
+    public String getName() {
+        return name;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getNickname() {
-        return nickname;
-    }
-
-    public void setNickname(String nickname) {
-        this.nickname = nickname;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getEmail() {
@@ -62,19 +57,28 @@ public class User {
         this.email = email;
     }
 
-    public LocalDateTime getCreated_date() {
+    public Date getCreated_date() {
         return created_date;
     }
 
-    public void setCreated_date(LocalDateTime created_date) {
+    public void setCreated_date(Date created_date) {
         this.created_date = created_date;
     }
 
-    public LocalDateTime getUpdated_date() {
+    public Date getUpdated_date() {
         return updated_date;
     }
 
-    public void setUpdated_date(LocalDateTime updated_date) {
+    public void setUpdated_date(Date updated_date) {
+        this.updated_date = updated_date;
+    }
+
+    public User(String uid, String pwd, String name, String email, Date created_date, Date updated_date) {
+        this.uid = uid;
+        this.pwd = pwd;
+        this.name = name;
+        this.email = email;
+        this.created_date = created_date;
         this.updated_date = updated_date;
     }
 }

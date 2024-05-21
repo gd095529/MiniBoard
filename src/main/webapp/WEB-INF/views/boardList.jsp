@@ -2,9 +2,9 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jstl/core_rt" %>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt_rt" %>
 <%@ page session="true"%>
-<c:set var="loginId" value="${sessionScope.nick}"/>
+<c:set var="loginId" value="${sessionScope.uid}"/>
 <c:set var="loginOutLink" value="${loginId=='' ? '/login/login' : '/login/logout'}"/>
-<c:set var="loginOut" value="${loginId=='' ? 'Login' : loginId+'님'}"/>
+<c:set var="loginOut" value="${loginId=='' ? 'Login' : 'ID='+=loginId}"/>
 <!DOCTYPE html>
 <html>
 <head>
@@ -209,23 +209,23 @@
                 <th class="no">번호</th>
                 <th class="title">제목</th>
                 <th class="writer">이름</th>
-                <th class="regdate">등록일</th>
+                <th class="createdate">등록일</th>
                 <th class="viewcnt">조회수</th>
             </tr>
-            <c:forEach var="boardsDto" items="${list}">
+            <c:forEach var="boardDto" items="${list}">
                 <tr>
-                    <td class="no">${boardsDto.bid}</td>
-                    <td class="title"><a href="<c:url value="/board/read${ph.sc.queryString}&bid=${boardsDto.bid}"/>"><c:out value="${boardsDto.title}"/></a></td>
-                    <td class="writer">${boardsDto.user_id}</td>
+                    <td class="no">${boardDto.bid}</td>
+                    <td class="title"><a href="<c:url value="/board/read${ph.sc.queryString}&bid=${boardDto.bid}"/>"><c:out value="${boardDto.title}"/></a></td>
+                    <td class="writer">${boardDto.writer}</td>
                     <c:choose>
-                        <c:when test="${boardsDto.updated_date.time >= startOfToday}">
-                            <td class="regdate"><fmt:formatDate value="${boardsDto.updated_date}" pattern="HH:mm" type="time"/></td>
+                        <c:when test="${boardDto.create_date.time >= startOfToday}">
+                            <td class="createdate"><fmt:formatDate value="${boardDto.create_date}" pattern="HH:mm" type="time"/></td>
                         </c:when>
                         <c:otherwise>
-                            <td class="regdate"><fmt:formatDate value="${boardsDto.updated_date}" pattern="yyyy-MM-dd" type="date"/></td>
+                            <td class="createdate"><fmt:formatDate value="${boardDto.create_date}" pattern="yyyy-MM-dd" type="date"/></td>
                         </c:otherwise>
                     </c:choose>
-                    <td class="viewcnt">${boardsDto.view_cnt}</td>
+                    <td class="viewcnt">${boardDto.view_cnt}</td>
                 </tr>
             </c:forEach>
         </table>

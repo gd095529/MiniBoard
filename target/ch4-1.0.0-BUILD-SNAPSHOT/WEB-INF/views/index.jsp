@@ -3,9 +3,9 @@
 <%@taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt_rt" %>
 <%@ page session="false"%>
 
-<c:set var="loginId" value="${pageContext.request.getSession(false)==null ? '' : pageContext.request.session.getAttribute('nick')}"/>
+<c:set var="loginId" value="${pageContext.request.getSession(false)==null ? '' : pageContext.request.session.getAttribute('uid')}"/>
 <c:set var="loginOutLink" value="${loginId=='' ? '/login/login' : '/login/logout'}"/>
-<c:set var="loginOut" value="${loginId=='' ? 'Login' : 'Logout'}"/>
+<c:set var="loginOut" value="${loginId=='' ? 'Login' : 'ID='+=loginId}"/>
 <!DOCTYPE html>
 <html>
 <head>
@@ -19,7 +19,6 @@
             justify-content: space-between;
         }
         a {
-
             white-space:nowrap;
         }
         .column {
@@ -64,7 +63,49 @@
     </ul>
 </div>
 
-<div><h1>홈화면</h1></div>
+<div class="container">
+    <div class="column">
+        <h2>최근 게시물</h2>
 
+        <div class="info"><div>제목</div><div>댓글 수</div><div>조회 수</div><div>작성일자</div></div>
+
+        <c:forEach var="boardDto" items="${list_d}">
+            <div class="info">
+                <div class="post"><a href="<c:url value="/board/read?bid=${boardDto.bid}"/>">${boardDto.title}</a></div>
+                <div>${boardDto.comment_cnt}</div>
+                <div>${boardDto.view_cnt}</div>
+                <div><fmt:formatDate value="${boardDto.create_date}" pattern="yyyy-MM-dd" type="date"/></div>
+            </div>
+        </c:forEach>
+    </div>
+    <div class="column">
+        <h2>조회수 많은 게시물</h2>
+
+        <div class="info"><div>제목</div><div>댓글 수</div><div>조회 수</div><div>작성일자</div></div>
+
+        <c:forEach var="boardDto" items="${list_vt}">
+            <div class="info">
+                <div class="post"><a href="<c:url value="/board/read?bid=${boardDto.bid}"/>">${boardDto.title}</a></div>
+                <div>${boardDto.comment_cnt}</div>
+                <div>${boardDto.view_cnt}</div>
+                <div><fmt:formatDate value="${boardDto.create_date}" pattern="yyyy-MM-dd" type="date"/></div>
+            </div>
+        </c:forEach>
+    </div>
+    <div class="column">
+        <h2>댓글 많은 게시물</h2>
+
+        <div class="info"><div>제목</div><div>댓글 수</div><div>조회 수</div><div>작성일자</div></div>
+
+        <c:forEach var="boardDto" items="${list_ct}">
+            <div class="info">
+                <div class="post"><a href="<c:url value="/board/read?bid=${boardDto.bid}"/>">${boardDto.title}</a></div>
+                <div>${boardDto.comment_cnt}</div>
+                <div>${boardDto.view_cnt}</div>
+                <div><fmt:formatDate value="${boardDto.create_date}" pattern="yyyy-MM-dd" type="date"/></div>
+            </div>
+        </c:forEach>
+    </div>
+</div>
 </body>
 </html>

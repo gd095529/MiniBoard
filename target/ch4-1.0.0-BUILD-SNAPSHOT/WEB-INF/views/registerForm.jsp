@@ -73,29 +73,27 @@
     <title>Register</title>
 </head>
 <body>
-
-<%--<form action="<c:url value="/register/add"/>" method="POST" onsubmit="return formCheck(this)">--%>
+<!-- form action="<c:url value="/register/add"/>" method="POST" onsubmit="return formCheck(this)"-->
 <form:form modelAttribute="user">
     <div class="title">Register</div>
-<%--    <div id="msg" class="msg"><form:errors path="id"/></div>--%>
-    <label for="">이메일</label>
-    <input class="input-field" type="text" name="email" placeholder="example@myportfolio.co.kr">
+    <div id="msg" class="msg"><form:errors path="uid"/></div>
+    <label for="">아이디</label>
+    <input class="input-field" type="text" name="uid" placeholder="4~12자리">
     <label for="">비밀번호</label>
-    <input class="input-field" type="text" name="password" placeholder="4~12자리">
+    <input class="input-field" type="text" name="pwd" placeholder="4~12자리">
     <label for="">이름</label>
-    <input class="input-field" type="text" name="username" placeholder="홍길동">
-    <label for="">닉네임</label>
-    <input class="input-field" type="text" name="nickname" placeholder="아무개">
+    <input class="input-field" type="text" name="name" placeholder="홍길동">
+    <label for="">이메일</label>
+    <input class="input-field" type="text" name="email" placeholder="example@fastcampus.co.kr">
 
     <button>회원 가입</button>
 </form:form>
-<%--</form>--%>
 <%--<script>--%>
 <%--    function formCheck(frm) {--%>
 <%--        let msg ='';--%>
 
-<%--        if(!frm.id.value.contains("@")) {--%>
-<%--            setMessage('올바른 형식을 맞춰주세요', frm.email);--%>
+<%--        if(frm.id.value.length<4) {--%>
+<%--            setMessage('id의 길이는 4이상이어야 합니다.', frm.id);--%>
 <%--            return false;--%>
 <%--        }--%>
 

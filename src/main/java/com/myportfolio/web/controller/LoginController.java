@@ -1,6 +1,7 @@
 package com.myportfolio.web.controller;
 
 import com.myportfolio.web.domain.User;
+import com.myportfolio.web.repository.UserDao;
 import com.myportfolio.web.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,19 +14,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.net.URLEncoder;
-
 @Controller
 @RequestMapping("/login")
 public class LoginController {
     @Autowired
-    UserService userService;
-
-//    @GetMapping("/login")
-//    public String aboutLogin() throws Exception{
-//
-//        throw new Exception("예외발생");
-//        return "index";
-//    }
+    UserDao userDao;
 
     @GetMapping("/login")
     public String loginForm() {
@@ -41,32 +34,30 @@ public class LoginController {
     }
 
     @PostMapping("/login")
-    public String login(String email, String pwd, String toURL, boolean rememberId,
+    public String login(String uid, String pwd, String toURL, boolean rememberId,
                         HttpServletRequest request, HttpServletResponse response) throws Exception {
 
         // 1. id와 pwd를 확인
-        if(!loginCheck(email, pwd)) {
+        if(!loginCheck(uid, pwd)) {
             // 2-1   일치하지 않으면, loginForm으로 이동
-            String msg = URLEncoder.encode("email 또는 pwd가 일치하지 않습니다.", "UTF-8");
+            String msg = URLEncoder.encode("id 또는 pwd가 일치하지 않습니다.", "UTF-8");
 
             return "redirect:/login/login?msg="+msg;
         }
         // 2-2. id와 pwd가 일치하면,
-        int uid = userService.read(email).getId();
         //  세션 객체를 얻어오기
         HttpSession session = request.getSession();
         //  세션 객체에 id를 저장
         session.setAttribute("uid", uid);
-        session.setAttribute("nick", userService.read(uid).getNickname());
 
         if(rememberId) {
             //     1. 쿠키를 생성
-            Cookie cookie = new Cookie("email", email); // ctrl+shift+o 자동 import
+            Cookie cookie = new Cookie("uid", uid); // ctrl+shift+o 자동 import
 //		       2. 응답에 저장
             response.addCookie(cookie);
         } else {
             // 1. 쿠키를 삭제
-            Cookie cookie = new Cookie("email", email); // ctrl+shift+o 자동 import
+            Cookie cookie = new Cookie("uid", uid); // ctrl+shift+o 자동 import
             cookie.setMaxAge(0); // 쿠키를 삭제
 //		       2. 응답에 저장
             response.addCookie(cookie);
@@ -77,17 +68,17 @@ public class LoginController {
         return "redirect:"+toURL;
     }
 
-    private boolean loginCheck(String email, String pwd) {
+    private boolean loginCheck(String uid, String pwd) {
         User user = null;
 
         try {
-            user = userService.read(email);
+            user = userDao.selectUser(uid);
         } catch (Exception e) {
             e.printStackTrace();
             return false;
         }
 
-        return user!=null && user.getPassword().equals(pwd);
-//        return "asdf".equals(id) && "1234".equals(pwd);
+        return user!=null && user.getPwd().equals(pwd);
+//        return "asdf".equals(uid) && "1234".equals(pwd);
     }
 }

@@ -3,40 +3,32 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.myportfolio.web.repository.UserMapper">
-    <select id="selectOne" resultType="User" parameterType="Integer">
-        select * from user
-        where id = #{id}
+    <select id="select" parameterType="String" resultType="User" >
+        select *
+        from user
+        where uid = #{uid}
     </select>
 
-    <select id="selectAll" resultType="User">
-        select * from user
-    </select>
+    <delete id="delete" parameterType="String" >
+        delete from user
+        where uid = #{uid}
+    </delete>
 
-    <insert id="insert" parameterType="User">
-        insert into user(username,password,nickname,email,created_date,updated_date)
-        values (#{username}, #{password}, #{nickname}, #{email}, now(), now())
+    <delete id="deleteAll">
+        delete from user
+    </delete>
+
+    <insert id="insertUser" parameterType="User">
+        insert into user
+        VALUES (#{uid}, #{pwd}, #{name}, #{email}, now(), now())
     </insert>
 
-    <delete id="delete" parameterType="Integer">
-        delete from user
-        where id = #{id}
-    </delete>
-
-    <delete id="deleteAll" >
-        delete from user
-    </delete>
-
-    <update id="update" parameterType="User">
-        update user set password = #{password}, username = #{username}, nickname = #{nickname}, updated_date = now()
+    <update id="updateUser" parameterType="User">
+        update user set pwd = #{pwd}, name = #{name}, email = #{email}, update_date = now()
         where id = #{id}
     </update>
 
     <select id="count" resultType="int">
         select count(*) from user
-    </select>
-
-    <select id="selectEmail" resultType="User" parameterType="String">
-        select * from user
-        where email = #{email}
     </select>
 </mapper>

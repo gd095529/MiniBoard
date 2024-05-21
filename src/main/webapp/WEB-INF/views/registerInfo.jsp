@@ -8,10 +8,10 @@
 <body>
 
     <h2>가입 완료</h2>
+    id : ${user.uid}<br>
+    pwd : ${user.pwd}<br>
+    name : ${user.name}<br>
     email : ${user.email}<br>
-    pwd : ${user.password}<br>
-    name : ${user.username}<br>
-    nickname : ${user.nickname}<br>
 
     <a href="<c:url value='/'/>">Home</a><br>
     <a href="<c:url value='/login/login'/>">로그인 하기</a>

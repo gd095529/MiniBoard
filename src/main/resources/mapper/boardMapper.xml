@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.myportfolio.web.repository.BoardMapper">
+    <select id="count" resultType="int">
+        select count(*) from board
+    </select>
+
+    <insert id="insert" parameterType="BoardDto" >
+        insert into board (title, content, writer)
+        values (#{title}, #{content}, #{writer})
+    </insert>
+
+    <select id="selectAll" resultType="BoardDto">
+        SELECT bid, title, content, writer, view_cnt, comment_cnt, create_date
+        FROM board
+        ORDER BY create_date DESC, bno DESC
+    </select>
+
+    <sql id="selectFromBoard">
+        SELECT bid, title, content, writer, view_cnt, comment_cnt, create_date
+        FROM board
+    </sql>
+
+    <select id="select" parameterType="int" resultType="com.myportfolio.web.domain.BoardDto">/*mybatis-config 이름 짧게 만들기가능*/
+        <include refid="selectFromBoard"/>
+        WHERE bid = #{bid}
+    </select>
+
+    <select id="selectPage" parameterType="map" resultType="BoardDto">
+        <include refid="selectFromBoard"/>
+        ORDER BY create_date DESC, bid DESC
+        LIMIT #{offset}, #{pageSize}
+    </select>
+
+    <delete id="deleteAll">
+        delete from board
+    </delete>
+
+    <delete id="deleteForAdmin" parameterType="map" >
+        delete from board where bid = #{bid}
+    </delete>
+
+    <delete id="delete" parameterType="map" >
+        delete from board where bid = #{bid} and writer = #{writer}
+    </delete>
+
+    <update id="update" parameterType="BoardDto" >
+        update board set title = #{title},
+                         content = #{content},
+                         update_date = now()
+        where bid = #{bid} and writer = #{writer}
+    </update>
+
+    <update id="updateCommentCnt" parameterType="map">
+        UPDATE board
+        SET   comment_cnt = comment_cnt + #{cnt}
+        WHERE bid = #{bid}
+    </update>
+
+    <update id="increaseViewCnt" parameterType="int">
+        UPDATE board
+        SET   view_cnt = view_cnt + 1
+        WHERE bid = #{bid}
+    </update>
+
+    <sql id="searchCondition">
+        <choose>
+            <when test='option=="T"'>
+                and title like concat ('%',#{keyword}, '%')
+            </when>
+            <when test='option=="W"'>
+                and writer like concat ('%',#{keyword}, '%')
+            </when>
+            <otherwise>
+                and (title like concat ('%',#{keyword}, '%')
+                or content like concat ('%',#{keyword}, '%'))
+            </otherwise>
+        </choose>
+    </sql>
+
+    <select id="searchSelectPage" parameterType="SearchCondition" resultType="BoardDto">
+        <include refid="selectFromBoard"/>
+        where true
+        <include refid="searchCondition"></include>
+        ORDER BY create_date DESC, bid DESC
+        LIMIT #{offset}, #{pageSize}
+    </select>
+
+    <select id="searchResultCnt" parameterType="SearchCondition" resultType="int">
+        Select Count(*) from board
+        where true
+        <include refid="searchCondition"></include>
+    </select>
+
+    <select id="selectVC" resultType="BoardDto">
+        select * from board
+        order by view_cnt desc, create_date desc
+            limit 0,5;
+    </select>
+
+    <select id="selectCC" resultType="BoardDto">
+        select * from board
+        order by comment_cnt desc, create_date desc
+            limit 0,5;
+    </select>
+
+    <select id="selectDate" resultType="BoardDto">
+        select * from board
+        order by create_date desc
+            limit 0,5;
+    </select>
+
+</mapper>

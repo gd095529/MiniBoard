@@ -1,16 +1,16 @@
-<%@ page import="com.myportfolio.web.domain.Comments" %>
+<%@ page import="com.myportfolio.web.domain.CommentDto" %>
 <%@ page import="java.util.List" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jstl/core_rt" %>
 <%@ page session="true"%>
-<c:set var="loginId" value="${sessionScope.nick}"/>
+<c:set var="loginId" value="${sessionScope.uid}"/>
 <c:set var="loginOutLink" value="${loginId=='' ? '/login/login' : '/login/logout'}"/>
-<c:set var="loginOut" value="${loginId=='' ? 'Login' : loginId+'님'}"/>
+<c:set var="loginOut" value="${loginId=='' ? 'Login' : 'ID='+=loginId}"/>
 <!DOCTYPE html>
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>게시판</title>
+    <title>소통하는곳</title>
     <link rel="stylesheet" href="<c:url value='/css/menu.css'/>">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="https://code.jquery.com/jquery-1.11.3.js"></script>
@@ -20,6 +20,10 @@
             margin: 0;
             padding: 0;
             font-family: "Noto Sans KR", sans-serif;
+        }
+
+        a {
+            white-space:nowrap;
         }
 
         .container {
@@ -110,7 +114,7 @@
 <body>
 <div id="menu">
     <ul>
-        <li id="logo">소통하는곳</li>
+        <li id="logo"><a href="<c:url value='/'/>">소통하는곳</a></li>
         <li><a href="<c:url value='/'/>">Home</a></li>
         <li><a href="<c:url value='/board/list'/>">Board</a></li>
         <li><a href="<c:url value='${loginOutLink}'/>">${loginOut}</a></li>
@@ -126,10 +130,10 @@
 <div class="container">
     <h2 class="writing-header">게시판 ${mode=="new" ? "글쓰기" : "읽기"}</h2>
     <form id="form" class="frm" action="" method="post">
-        <input type="hidden" name="bid" value="${boardsDto.id}">
+        <input type="hidden" name="bid" value="${boardDto.bid}">
 
-        <input name="title" type="text" value="<c:out value='${boardsDto.title}'/>" placeholder="  제목을 입력해 주세요." ${mode=="new" ? "" : "readonly='readonly'"}><br>
-        <textarea name="content" rows="20" placeholder=" 내용을 입력해 주세요." ${mode=="new" ? "" : "readonly='readonly'"}><c:out value="${boardsDto.content}"/></textarea><br>
+        <input name="title" type="text" value="<c:out value='${boardDto.title}'/>" placeholder="  제목을 입력해 주세요." ${mode=="new" ? "" : "readonly='readonly'"}><br>
+        <textarea name="content" rows="20" placeholder=" 내용을 입력해 주세요." ${mode=="new" ? "" : "readonly='readonly'"}><c:out value="${boardDto.content}"/></textarea><br>
 
         <c:if test="${mode eq 'new'}">
             <button type="button" id="writeBtn" class="btn btn-write"><i class="fa fa-pencil"></i> 등록</button>
@@ -137,7 +141,7 @@
         <c:if test="${mode ne 'new'}">
             <button type="button" id="writeNewBtn" class="btn btn-write"><i class="fa fa-pencil"></i> 글쓰기</button>
         </c:if>
-        <c:if test="${boardsDto.user_id eq loginId}">
+        <c:if test="${boardDto.writer eq loginId}">
             <button type="button" id="modifyBtn" class="btn btn-modify"><i class="fa fa-edit"></i> 수정</button>
             <button type="button" id="removeBtn" class="btn btn-remove"><i class="fa fa-trash"></i> 삭제</button>
         </c:if>
@@ -146,24 +150,24 @@
 </div><br>
 
 <c:if test="${mode ne 'new'}">
-<div class="comments-container1">
-    <h2>댓글 ${boardsDto.comment_cnt}</h2>
+    <div class="comments-container1">
+        <h2>댓글 ${boardDto.comment_cnt}</h2>
 
-    <div id="commentList"></div>
-    <div id="replyForm" style="display: none">
-        <input type="text" name="replyComment">
-        <button id="wrtRepBtn" type="button" style="display: none">등록</button>
-        <button id="modComBtn" type="button" style="display: none">수정</button>
+        <div id="commentList"></div>
+        <div id="replyForm" style="display: none">
+            <input type="text" name="replyComment">
+            <button id="wrtRepBtn" type="button" style="display: none">등록</button>
+            <button id="modComBtn" type="button" style="display: none">수정</button>
+        </div>
+
+        <table>
+            <tr>
+                <th rowspan="2" class="writer">${sessionScope.uid}</th>
+                <td rowspan="5" class="content"><input type="text" name="comment" placeholder="댓글을 입력해주세요"></td>
+                <td><input id="sendBtn" type="button" value="댓글등록"></td>
+            </tr>
+        </table>
     </div>
-
-    <table>
-        <tr>
-            <th rowspan="2" class="writer">${sessionScope.uid}</th>
-            <td rowspan="5" class="content"><input type="text" name="comment" placeholder="댓글을 입력해주세요"></td>
-            <td><input id="sendBtn" type="button" value="댓글등록"></td>
-        </tr>
-    </table>
-</div>
 </c:if>
 
 <script>
@@ -233,7 +237,7 @@
 </script>
 
 <c:if test="${mode ne 'new'}">
-<script>
+    <script>
         // 현재 URL을 가져옵니다.
         const currentUrl = window.location.href;
 
@@ -241,9 +245,9 @@
         const urlParams = new URLSearchParams(window.location.search);
 
         // 'bid' 파라미터의 값을 가져옵니다.
-        const postValue = urlParams.get('bid');
+        const boardValue = urlParams.get('bid');
 
-        let bid = postValue;
+        let bid = boardValue;
 
         let showList = function (bid){
             $.ajax({
@@ -342,7 +346,7 @@
 
                 $.ajax({
                     type:'POST',       // 요청 메서드
-                    url: '/my/comments?bid='+bid,  // 요청 URI // /my/comments?bno=644 POST
+                    url: '/my/comments?bid='+bid,  // 요청 URI // /my/comments?bid=644 POST
                     headers : { "content-type": "application/json"}, // 요청 헤더
                     data : JSON.stringify({bid:bid, comment:comment}),  // 서버로 전송할 데이터. stringify()로 직렬화 필요.
                     success : function(result){
@@ -406,7 +410,7 @@
             let tmp = "<div class='comment-container'>";
 
             commets.forEach(function (comment){
-                var dateString = comment.up_date;
+                var dateString = comment.update_date;
                 var date = new Date(dateString);
                 // var formattedDate = date.toLocaleDateString('ko-KR');
                 var formattedDateTime = date.toLocaleString('ko-KR', {
@@ -435,7 +439,7 @@
             return tmp + "</div>";
         }
 
-</script>
+    </script>
 </c:if>
 
 </body>

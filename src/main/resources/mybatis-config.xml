@@ -6,9 +6,19 @@
     <typeAliases>
 <!--        <typeAlias alias="UserDao" type="com.myportfolio.web.repository.UserDao"/>-->
         <typeAlias alias="User" type="com.myportfolio.web.domain.User"/>
-        <typeAlias alias="Comments" type="com.myportfolio.web.domain.Comments"/>
-        <typeAlias alias="Posts" type="com.myportfolio.web.domain.Boards"/>
+        <typeAlias alias="CommentDto" type="com.myportfolio.web.domain.CommentDto"/>
+        <typeAlias alias="BoardDto" type="com.myportfolio.web.domain.BoardDto"/>
         <typeAlias alias="SearchCondition" type="com.myportfolio.web.domain.SearchCondition"/>
-
     </typeAliases>
 </configuration>
+
+
+<!--
+바꾼것
+cno
+bno
+id
+up_date
+reg_date
+ch4
+-->

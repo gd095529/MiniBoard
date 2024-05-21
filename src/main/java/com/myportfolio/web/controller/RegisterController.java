@@ -2,7 +2,8 @@ package com.myportfolio.web.controller;
 
 
 import com.myportfolio.web.domain.User;
-import com.myportfolio.web.service.UserCheck;
+import com.myportfolio.web.repository.UserDao;
+import com.myportfolio.web.service.UserValidator;
 import com.myportfolio.web.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
@@ -17,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import javax.validation.Valid;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-
 @Controller
 @RequestMapping("/register")
 public class RegisterController {
@@ -31,10 +31,10 @@ public class RegisterController {
     public void toDate(WebDataBinder binder){
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
         binder.registerCustomEditor(Date.class, new CustomDateEditor(df,false));
-        binder.setValidator(new UserCheck());
+        binder.setValidator(new UserValidator());
     }
 
-    @PostMapping("/add") //modelAttribute 생략
+    @PostMapping("/add")
     public String saveUser(@Valid User user, BindingResult result) throws Exception {
         System.out.println("result="+result);
         System.out.println("user="+user);
@@ -70,7 +70,7 @@ public class RegisterController {
     }
 
     @PostMapping("/delete")
-    public String deleteUser(Integer uid) {
+    public String deleteUser(String uid) {
         try {
             userService.delete(uid);
         }catch (Exception e){
@@ -80,4 +80,5 @@ public class RegisterController {
 
         return "/";
     }
+
 }
