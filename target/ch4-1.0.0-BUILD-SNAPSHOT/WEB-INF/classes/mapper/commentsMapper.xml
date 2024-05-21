@@ -4,9 +4,9 @@
 
 <mapper namespace="com.myportfolio.web.repository.CommentsMapper">
     <select id="selectAll" parameterType="int" resultType="Comments">
-        select * from comments
-        where post_id = #{post_id}
-        order by pcid desc corder asc
+        select id,comment,update_date,board_id,user_id,ifnull(pcid,id) from comments
+        where board_id = #{board_id}
+        order by pcid asc, cid asc
     </select>
 
     <select id="select" resultType="Comments" parameterType="Integer">
@@ -16,12 +16,12 @@
 
     <delete id="deleteAll" parameterType="int">
         delete from comments
-        where post_id = #{post_id}
+        where board_id = #{board_id}
     </delete>
 
     <select id="count" parameterType="int" resultType="int">
         select count(*) from comments
-        where post_id = #{post_id}
+        where board_id = #{board_id}
     </select>
 
     <delete id="delete" parameterType="map">
@@ -30,15 +30,10 @@
 
     <insert id="insert" parameterType="Comments">
         insert into comments
-            (id, comment, created_date, updated_date, post_id, user_id, cdepth, pcid, corder)
+            (id, comment, created_date, updated_date, post_id, user_id, pcid)
         values
-            (null, #{comment}, now(), now(), #{post_id}, #{user_id}, 0, 0, 0)
+            (null, #{comment}, now(), now(), #{post_id}, #{user_id}, #{pcid})
     </insert>
-
-    <update id="updatePcid" parameterType="int">
-        update comments set pcid = #{id}
-        where id = #{id}
-    </update>
 
     <update id="update" parameterType="Comments">
         update comments
