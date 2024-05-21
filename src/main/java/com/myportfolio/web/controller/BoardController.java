@@ -1,9 +1,9 @@
 package com.myportfolio.web.controller;
 
+import com.myportfolio.web.domain.Boards;
 import com.myportfolio.web.domain.PageHandler;
-import com.myportfolio.web.domain.Posts;
 import com.myportfolio.web.domain.SearchCondition;
-import com.myportfolio.web.service.PostsService;
+import com.myportfolio.web.service.BoardsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,16 +22,16 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/board")
-public class PostController {
+public class BoardController {
     @Autowired
-    PostsService postsService;
+    BoardsService boardsService;
 
     @PostMapping("/remove")
     public String remove(Integer bid, SearchCondition sc, Model m, HttpSession session, RedirectAttributes rattr) {
         String writer = (String) session.getAttribute("uid");
         try {
 
-            int rowCnt = postsService.remove(bid, writer);
+            int rowCnt = boardsService.remove(bid, writer);
             if (rowCnt != 1)
                 throw new Exception("post remove err");
 
@@ -48,12 +48,12 @@ public class PostController {
     }
 
     @PostMapping("/modify")
-    public String modify(Integer page, Integer pageSize, Posts postsDto, Model m/*객체 바로뒤에*/, HttpSession session, RedirectAttributes rattr) {
+    public String modify(Integer page, Integer pageSize, Boards boardsDto, Model m/*객체 바로뒤에*/, HttpSession session, RedirectAttributes rattr) {
         int writer = (Integer) session.getAttribute("uid");
-        postsDto.setUser_id(writer);
+        boardsDto.setUser_id(writer);
 
         try {
-            int rowCnt = postsService.modify(postsDto);
+            int rowCnt = boardsService.modify(boardsDto);
 
             if (rowCnt != 1) {
                 throw new Exception("MOD_FAIL");
@@ -64,7 +64,7 @@ public class PostController {
             rattr.addAttribute("pageSize", pageSize);
         } catch (Exception e) {
             e.printStackTrace();
-            m.addAttribute("PostsDto", postsDto);
+            m.addAttribute("PostsDto", boardsDto);
             m.addAttribute("msg", "MOD_ERR");
             return "board";
         }
@@ -79,12 +79,12 @@ public class PostController {
     }
 
     @PostMapping("/write")
-    public String write(Posts postsDto, Model m/*객체 바로뒤에*/, HttpSession session, RedirectAttributes rattr) {
+    public String write(Boards boardsDto, Model m/*객체 바로뒤에*/, HttpSession session, RedirectAttributes rattr) {
         int writer = (Integer) session.getAttribute("uid");
-        postsDto.setUser_id(writer);
+        boardsDto.setUser_id(writer);
 
         try {
-            int rowCnt = postsService.write(postsDto);
+            int rowCnt = boardsService.write(boardsDto);
 
             if (rowCnt != 1) {
                 throw new Exception("WRT_FAIL");
@@ -94,7 +94,7 @@ public class PostController {
             return "redirect:/board/list";
         } catch (Exception e) {
             e.printStackTrace();
-            m.addAttribute("PostsDto", postsDto);
+            m.addAttribute("PostsDto", boardsDto);
             m.addAttribute("msg", "WRT_ERR");
             return "board";
         }
@@ -107,9 +107,9 @@ public class PostController {
             return "redirect:/login/login?toURL=" + request.getRequestURL() + "?bid=" + bid;  // 로그인을 안했으면 로그인 화면으로 이동
         }
         try {
-            Posts postsDto = postsService.read(bid);
+            Boards boardsDto = boardsService.read(bid);
 //            m.addAttribute("postsDto",postsDto); //타입 앞문자를 소문자로 했을때 같으면 생략가능,아래와 같다
-            m.addAttribute(postsDto);
+            m.addAttribute(boardsDto);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -128,11 +128,11 @@ public class PostController {
         }
 
         try {
-            int totalCnt = postsService.getSearchResultCnt(sc);
+            int totalCnt = boardsService.getSearchResultCnt(sc);
             m.addAttribute("totalCnt", totalCnt);
             PageHandler pageHandler = new PageHandler(totalCnt, sc);
 
-            List<Posts> list = postsService.getSearchResultPage(sc);
+            List<Boards> list = boardsService.getSearchResultPage(sc);
             m.addAttribute("list", list);
             m.addAttribute("ph", pageHandler);
             m.addAttribute("page", sc.getPage());
@@ -156,6 +156,6 @@ public class PostController {
         HttpSession session = request.getSession();
 
         // 2. 세션에 id가 있는지 확인, 있으면 true를 반환
-        return session.getAttribute("id")!=null;
+        return session.getAttribute("uid")!=null;
     }
 }

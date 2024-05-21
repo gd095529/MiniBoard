@@ -7,13 +7,21 @@ public class Comments {
     private String comment;
     private LocalDateTime created_date;
     private LocalDateTime updated_date;
-    private Integer post_id;
+    private Integer board_id;
     private Integer user_id;
-    private Integer cdepth;
     private Integer pcid;
-    private Integer corder;
 
-    public Comments(){}
+    public Comments() {
+    }
+    public Comments(Integer id, String comment, LocalDateTime created_date, LocalDateTime updated_date, Integer board_id, Integer user_id, Integer pcid) {
+        this.id = id;
+        this.comment = comment;
+        this.created_date = created_date;
+        this.updated_date = updated_date;
+        this.board_id = board_id;
+        this.user_id = user_id;
+        this.pcid = pcid;
+    }
 
     @Override
     public String toString() {
@@ -22,11 +30,9 @@ public class Comments {
                 ", comment='" + comment + '\'' +
                 ", created_date=" + created_date +
                 ", updated_date=" + updated_date +
-                ", post_id=" + post_id +
+                ", board_id=" + board_id +
                 ", user_id=" + user_id +
-                ", cdepth=" + cdepth +
                 ", pcid=" + pcid +
-                ", corder=" + corder +
                 '}';
     }
 
@@ -62,12 +68,12 @@ public class Comments {
         this.updated_date = updated_date;
     }
 
-    public Integer getPost_id() {
-        return post_id;
+    public Integer getBoard_id() {
+        return board_id;
     }
 
-    public void setPost_id(Integer post_id) {
-        this.post_id = post_id;
+    public void setBoard_id(Integer board_id) {
+        this.board_id = board_id;
     }
 
     public Integer getUser_id() {
@@ -78,39 +84,11 @@ public class Comments {
         this.user_id = user_id;
     }
 
-    public Integer getCdepth() {
-        return cdepth;
-    }
-
-    public void setCdepth(Integer cdepth) {
-        this.cdepth = cdepth;
-    }
-
     public Integer getPcid() {
         return pcid;
     }
 
     public void setPcid(Integer pcid) {
         this.pcid = pcid;
-    }
-
-    public Integer getCorder() {
-        return corder;
-    }
-
-    public void setCorder(Integer corder) {
-        this.corder = corder;
-    }
-
-    public Comments(Integer id, String comment, LocalDateTime created_date, LocalDateTime updated_date, Integer post_id, Integer user_id, Integer cdepth, Integer pcid, Integer corder) {
-        this.id = id;
-        this.comment = comment;
-        this.created_date = created_date;
-        this.updated_date = updated_date;
-        this.post_id = post_id;
-        this.user_id = user_id;
-        this.cdepth = cdepth;
-        this.pcid = pcid;
-        this.corder = corder;
     }
 }

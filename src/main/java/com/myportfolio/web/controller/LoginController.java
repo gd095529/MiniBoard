@@ -16,7 +16,7 @@ import java.net.URLEncoder;
 
 @Controller
 @RequestMapping("/login")
-public class loginController {
+public class LoginController {
     @Autowired
     UserService userService;
 

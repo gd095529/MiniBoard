@@ -2,7 +2,7 @@ package com.myportfolio.web.domain;
 
 import java.time.LocalDateTime;
 
-public class Posts {
+public class Boards {
     private Integer id;
     private String title;
     private String content;
@@ -10,9 +10,9 @@ public class Posts {
     private LocalDateTime created_date;
     private LocalDateTime updated_date;
     private Integer user_id;
-    private Integer ppid;
+    private Integer comment_cnt;
 
-    public Posts(){}
+    public Boards(){}
 
     @Override
     public String toString() {
@@ -24,7 +24,7 @@ public class Posts {
                 ", created_date=" + created_date +
                 ", updated_date=" + updated_date +
                 ", user_id=" + user_id +
-                ", ppid=" + ppid +
+                ", comment_cnt=" + comment_cnt +
                 '}';
     }
 
@@ -84,15 +84,15 @@ public class Posts {
         this.user_id = user_id;
     }
 
-    public Integer getPpid() {
-        return ppid;
+    public Integer getComment_cnt() {
+        return comment_cnt;
     }
 
-    public void setPpid(Integer ppid) {
-        this.ppid = ppid;
+    public void setComment_cnt(Integer comment_cnt) {
+        this.comment_cnt = comment_cnt;
     }
 
-    public Posts(Integer id, String title, String content, Integer view_cnt, LocalDateTime created_date, LocalDateTime updated_date, Integer user_id, Integer ppid) {
+    public Boards(Integer id, String title, String content, Integer view_cnt, LocalDateTime created_date, LocalDateTime updated_date, Integer user_id, Integer comment_cnt) {
         this.id = id;
         this.title = title;
         this.content = content;
@@ -100,6 +100,6 @@ public class Posts {
         this.created_date = created_date;
         this.updated_date = updated_date;
         this.user_id = user_id;
-        this.ppid = ppid;
+        this.comment_cnt = comment_cnt;
     }
 }

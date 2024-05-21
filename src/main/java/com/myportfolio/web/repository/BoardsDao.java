@@ -1,6 +1,6 @@
 package com.myportfolio.web.repository;
 
-import com.myportfolio.web.domain.Posts;
+import com.myportfolio.web.domain.Boards;
 import com.myportfolio.web.domain.SearchCondition;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,12 +11,12 @@ import java.util.List;
 import java.util.Map;
 
 @Repository
-public class PostsDao {
+public class BoardsDao {
 
     @Autowired
     private SqlSession session;
 
-    private static String namespace = "com.myportfolio.web.repository.PostsMapper.";
+    private static String namespace = "com.myportfolio.web.repository.BoardsMapper.";
 
     public int count() throws Exception{
         return session.selectOne(namespace+"count");
@@ -29,23 +29,23 @@ public class PostsDao {
         return session.delete(namespace+"delete", map);
     }
 
-    public int insert(Posts dto) throws Exception{
+    public int insert(Boards dto) throws Exception{
         return session.insert(namespace+"insert", dto);
     }
 
-    public List<Posts> selectAll() throws Exception{
+    public List<Boards> selectAll() throws Exception{
         return session.selectList(namespace+"selectAll");
     }
 
-    public Posts select(Integer id) throws Exception{
+    public Boards select(Integer id) throws Exception{
         return session.selectOne(namespace+"select", id);
     }
 
-    public List<Posts> selectPage(Map map) throws Exception{
+    public List<Boards> selectPage(Map map) throws Exception{
         return session.selectList(namespace+"selectPage",map);
     }
 
-    public int update(Posts dto) throws Exception{
+    public int update(Boards dto) throws Exception{
         return session.update(namespace+"update",dto);
     }
 
@@ -57,7 +57,7 @@ public class PostsDao {
         return session.selectOne(namespace+"searchResultCnt",sc);
     }
 
-    public List<Posts> searchSelectPage(SearchCondition sc) throws Exception{
+    public List<Boards> searchSelectPage(SearchCondition sc) throws Exception{
         return session.selectList(namespace+"searchSelectPage",sc);
     }
 

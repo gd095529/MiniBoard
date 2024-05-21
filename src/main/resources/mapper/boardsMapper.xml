@@ -2,57 +2,57 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.myportfolio.web.repository.PostsMapper">
+<mapper namespace="com.myportfolio.web.repository.BoardsMapper">
 
-    <select id="selectAll" resultType="Posts">
-        select id,title,view_cnt,updated_date,user_id,ifnull(ppid,id) from posts
-        order by ppid desc, id asc
+    <select id="selectAll" resultType="Boards">
+        select id,title,view_cnt,updated_date,user_id,comment_cnt from boards
+        order by id desc
     </select>
 
     <select id="count" resultType="int">
-        select count(*) from posts
+        select count(*) from boards
     </select>
 
-    <insert id="insert" parameterType="Posts">
-        insert into posts
-        (id, title, content, view_cnt, created_date, updated_date, user_id, ppid)
+    <insert id="insert" parameterType="Boards">
+        insert into boards
+        (id, title, content, created_date, updated_date, user_id)
         values
-            (#{id},#{title},#{content},#{view_cnt},#{created_date},#{updated_date},#{user_id},#{ppid})
+            (null,#{title},#{content},now(),now(),#{user_id})
     </insert>
 
-    <select id="select" parameterType="int" resultType="Posts">
+    <select id="select" parameterType="int" resultType="Boards">
         select *
-        from posts
+        from boards
         where id = #{id}
     </select>
 
-    <select id="selectPage" parameterType="map" resultType="Posts">
-        select * from posts
+    <select id="selectPage" parameterType="map" resultType="Boards">
+        select * from boards
         order by ppid desc, id asc
         limit #{offset}, #{pageSize}
     </select>
 
     <delete id="deleteAll">
-        delete from posts
+        delete from boards
     </delete>
 
     <delete id="delete" parameterType="map">
-        delete from posts
+        delete from boards
         where id = #{id} and user_id = #{user_id}
     </delete>
 
-    <update id="update" parameterType="Posts">
-        update posts set title = #{title}, content = #{content}, updated_date = #{updated_date}
+    <update id="update" parameterType="Boards">
+        update boards set title = #{title}, content = #{content}, updated_date = now()
         where id = #{id} and user_id = #{user_id}
     </update>
 
     <update id="increaseViewCnt" parameterType="int">
-        update posts set view_cnt = view_cnt + 1
+        update boards set view_cnt = view_cnt + 1
         where id = #{id}
     </update>
 
     <update id="updateCommentCnt" parameterType="map">
-        update posts set comment_cnt = comment_cnt + #{cnt}
+        update boards set comment_cnt = 1 + #{comment_cnt}
         where id = #{id}
     </update>
 
@@ -71,21 +71,21 @@
         </choose>
     </sql>
 
-    <sql id="selectFromPosts">
+    <sql id="selectFromBoards">
         SELECT *
-        FROM posts
+        FROM boards
     </sql>
 
     <select id="searchSelectPage" parameterType="SearchCondition" resultType="Posts">
-        <include refid="selectFromPosts"/>
+        <include refid="selectFromBoards"/>
         where true
         <include refid="searchCondition"></include>
-        ORDER BY ppid DESC, id ASC
+        ORDER BY id desc
         LIMIT #{offset}, #{pageSize}
     </select>
 
     <select id="searchResultCnt" parameterType="SearchCondition" resultType="int">
-        Select Count(*) from posts
+        Select Count(*) from boards
         where true
         <include refid="searchCondition"></include>
     </select>
