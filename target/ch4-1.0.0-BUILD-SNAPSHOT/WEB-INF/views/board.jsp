@@ -256,7 +256,7 @@
                 success : function(result){
                     $("#commentList").html(toHtml(result)); // 서버로 부터 응답이 도착하면 호출될 함수
                 },
-                error   : function(){ alert("error") } // 에러가 발생했을 때, 호출될 함수
+                error   : function(){ alert("comment error") } // 에러가 발생했을 때, 호출될 함수
             }); // $.ajax()
         }
 
@@ -417,7 +417,6 @@
                     year: 'numeric', month: 'numeric', day: 'numeric',
                     hour: '2-digit', minute: '2-digit', second: '2-digit'
                 });
-
 
                 tmp += '<div class="comments" data-cid='+ comment.cid
                 tmp += ' data-pcid='+ comment.pcid

@@ -1,14 +1,15 @@
 package com.myportfolio.web.domain;
 
 import java.util.Date;
+import java.util.Objects;
 
 public class CommentDto {
     private Integer cid;
     private Integer pcid;
     private String comment;
     private String commenter;
-    private Date created_date;
-    private Date updated_date;
+    private Date create_date;
+    private Date update_date;
     private Integer bid;
 
     public CommentDto() {
@@ -21,8 +22,8 @@ public class CommentDto {
                 ", pcid=" + pcid +
                 ", comment='" + comment + '\'' +
                 ", commenter='" + commenter + '\'' +
-                ", created_date=" + created_date +
-                ", updated_date=" + updated_date +
+                ", create_date=" + create_date +
+                ", update_date=" + update_date +
                 ", bid=" + bid +
                 '}';
     }
@@ -59,20 +60,20 @@ public class CommentDto {
         this.commenter = commenter;
     }
 
-    public Date getCreated_date() {
-        return created_date;
+    public Date getCreate_date() {
+        return create_date;
     }
 
-    public void setCreated_date(Date created_date) {
-        this.created_date = created_date;
+    public void setCreate_date(Date create_date) {
+        this.create_date = create_date;
     }
 
-    public Date getUpdated_date() {
-        return updated_date;
+    public Date getUpdate_date() {
+        return update_date;
     }
 
-    public void setUpdated_date(Date updated_date) {
-        this.updated_date = updated_date;
+    public void setUpdate_date(Date update_date) {
+        this.update_date = update_date;
     }
 
     public Integer getBid() {
@@ -83,13 +84,13 @@ public class CommentDto {
         this.bid = bid;
     }
 
-    public CommentDto(Integer cid, Integer pcid, String comment, String commenter, Date created_date, Date updated_date, Integer bid) {
+    public CommentDto(Integer cid, Integer pcid, String comment, String commenter, Date create_date, Date update_date, Integer bid) {
         this.cid = cid;
         this.pcid = pcid;
         this.comment = comment;
         this.commenter = commenter;
-        this.created_date = created_date;
-        this.updated_date = updated_date;
+        this.create_date = create_date;
+        this.update_date = update_date;
         this.bid = bid;
     }
 }

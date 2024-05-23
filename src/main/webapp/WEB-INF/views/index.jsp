@@ -17,6 +17,7 @@
         .container {
             display: flex;
             justify-content: space-between;
+            margin-top: 48px;
         }
         a {
             white-space:nowrap;
@@ -33,6 +34,7 @@
             gap: 10px; /* 컬럼 사이의 간격 */
 
         }
+
         .post {
             margin-bottom: 10px;
             padding: 10px;
@@ -42,6 +44,10 @@
             overflow: hidden;
             text-overflow: ellipsis; /* "..."으로 표현 */
             display: block;
+
+        }
+        .post:hover{
+            text-decoration: underline;
         }
         .post:last-child {
             margin-bottom: 0;
