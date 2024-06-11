@@ -151,7 +151,7 @@
 
 <c:if test="${mode ne 'new'}">
     <div class="comments-container1">
-        <h2>댓글 ${boardDto.comment_cnt}</h2>
+        <h2 id="total">댓글 ${boardDto.comment_cnt}</h2>
 
         <div id="commentList"></div>
         <div id="replyForm" style="display: none">
@@ -260,6 +260,17 @@
             }); // $.ajax()
         }
 
+        let totalCnt = function (bid){
+            $.ajax({
+                type:'GET',       // 요청 메서드
+                url: '/my/board/comments?bid='+bid,  // 요청 URI
+                success : function(result){
+                    // 댓글 수를 업데이트합니다.
+                    $("#total").text("댓글 "+ result);
+                },
+                error   : function(){ alert("commentCnt error") } // 에러가 발생했을 때, 호출될 함수
+            }); // $.ajax()
+        }
 
         $(document).ready(function(){
             showList(bid);
@@ -287,6 +298,7 @@
                     success : function(result){
                         alert(result);
                         showList(bid);
+                        totalCnt(bid);
                         $("input[name=replyComment]").val('');
                     },
                     error   : function(){ alert("error") } // 에러가 발생했을 때, 호출될 함수
@@ -321,6 +333,7 @@
                     success : function(result){
                         alert(result);
                         showList(bid);
+                        totalCnt(bid);
                     },
                     error   : function(){ alert("error") } // 에러가 발생했을 때, 호출될 함수
                 }); // $.ajax()
@@ -352,6 +365,7 @@
                     success : function(result){
                         alert(result);
                         showList(bid);
+                        totalCnt(bid);
                         $("input[name=comment]").val("")
                     },
                     error   : function(){ alert("error") } // 에러가 발생했을 때, 호출될 함수
@@ -400,6 +414,7 @@
                     success : function(result){
                         alert(result);
                         showList(bid);
+                        totalCnt(bid);
                     },
                     error   : function(){ alert("error") } // 에러가 발생했을 때, 호출될 함수
                 }); // $.ajax()

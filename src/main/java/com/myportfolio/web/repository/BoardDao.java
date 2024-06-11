@@ -21,6 +21,10 @@ public class BoardDao {
         return session.selectOne(namespace+"count");
     } // T selectOne(String statement)
 
+    public int countCnt(Integer bid) throws Exception {
+        return session.selectOne(namespace+"countCnt", bid);
+    }
+
     public int deleteAll() {
         return session.delete(namespace+"deleteAll");
     } // int delete(String statement)

@@ -11,14 +11,3 @@
         <typeAlias alias="SearchCondition" type="com.myportfolio.web.domain.SearchCondition"/>
     </typeAliases>
 </configuration>
-
-
-<!--
-바꾼것
-cno
-bno
-id
-up_date
-reg_date
-ch4
--->

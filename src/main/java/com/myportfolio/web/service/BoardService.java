@@ -19,6 +19,9 @@ public class BoardService {
         return boardDao.count();
     }
 
+    public int getCnt(Integer bid) throws Exception {
+        return boardDao.countCnt(bid);
+    }
     
     public int remove(Integer bid, String writer) throws Exception {
         return boardDao.delete(bid, writer);

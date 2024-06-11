@@ -7,9 +7,14 @@
         select count(*) from board
     </select>
 
+    <select id="countCnt" parameterType="Integer" resultType="int">
+        select comment_cnt from board
+        where bid = #{bid}
+    </select>
+
     <insert id="insert" parameterType="BoardDto" >
-        insert into board (title, content, writer)
-        values (#{title}, #{content}, #{writer})
+        insert into board (title, content, writer, view_cnt, comment_cnt)
+        values (#{title}, #{content}, #{writer}, 0, 0)
     </insert>
 
     <select id="selectAll" resultType="BoardDto">
@@ -55,7 +60,7 @@
 
     <update id="updateCommentCnt" parameterType="map">
         UPDATE board
-        SET   comment_cnt = comment_cnt + #{cnt}
+        SET   comment_cnt = comment_cnt + #{comment_cnt}
         WHERE bid = #{bid}
     </update>
 

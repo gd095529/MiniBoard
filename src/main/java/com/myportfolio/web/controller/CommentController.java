@@ -58,11 +58,9 @@ public class CommentController {
         dto.setCommenter(commenter);
         dto.setBid(bid);
         System.out.println("dto = " + dto);
-
         try {
             if(service.write(dto)!=1)
                 throw new Exception("write fail");
-
             return new ResponseEntity<>("write ok", HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
